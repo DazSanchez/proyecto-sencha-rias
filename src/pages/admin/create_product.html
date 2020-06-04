@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      FreeMarket
+    </title>
+    <link rel="stylesheet" href="../../assets/css/line-awesome.min.css" />
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../assets/css/index.css " />
+  </head>
+  <body class="d-flex flex-column">
+    <header class="header d-flex justify-content-center align-items-center">
+      <div
+        class="header__container d-flex justify-content-between align-items-center container"
+      >
+        <a href="/">
+          <img
+            class="logo"
+            src="../../assets/img/logo.png"
+            alt="FreeMarket logo"
+          />
+        </a>
+        <nav class="menu d-flex align-items-center">
+          <span id="username-display" class="text-white mr-3 d-none">
+            Bienvenido, <span id="username"></span>
+          </span>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main bg-white container mt-4 pt-5">
+      <div class="section d-flex flex-row justify-content-between">
+        <a href="/" class="btn"><i class="la la-angle-left"></i> Volver</a>
+      </div>
+
+      <form action="" class="p-2" id="product-form">
+        <h1 class="h5 col-auto">Crear un producto</h1>
+        <div
+          class="section d-flex flex-column flex-md-row col-12 justify-content-around"
+        >
+          <div class="section d-flex flex-column col-auto col-md-4 col-lg-3">
+            <h6>Imagen</h6>
+            <input
+              type="file"
+              name="imagen"
+              id="imagen"
+              accept="image/*"
+              required
+            />
+
+            <h6 class="pt-2">Existencia</h6>
+            <input
+              class="form-control"
+              type="number"
+              name="existencia"
+              id="existencia"
+              placeholder="0"
+              required
+            />
+          </div>
+
+          <div class="section d-flex flex-wrap col-auto col-md-8 col-lg-9">
+            <div class="form-group col-12">
+              <input
+                type="text"
+                class="form-control"
+                id="model"
+                name="model"
+                placeholder="Modelo"
+                required
+              />
+            </div>
+            <div class="form-group col-12">
+              <textarea
+                class="form-control"
+                name="description"
+                id="description"
+                placeholder="Descripcion"
+                cols="30"
+                rows="5"
+                required
+              ></textarea>
+            </div>
+
+            <div class=" d-flex flex-wrap align-items-end">
+              <div class="form-group col-12 col-md-3 col-lg-2">
+                <h6 class="h6">Medidas</h6>
+                <input
+                  class="form-control"
+                  type="number"
+                  name="alto"
+                  id="alto"
+                  placeholder="Alto"
+                  required
+                />
+              </div>
+              <div class="form-group col-12 col-md-3 col-lg-2">
+                <input
+                  class="form-control"
+                  type="number"
+                  name="ancho"
+                  id="ancho"
+                  placeholder="Ancho"
+                  required
+                />
+              </div>
+              <div class="form-group col-12 col-md-3 col-lg-2">
+                <input
+                  class="form-control"
+                  type="number"
+                  name="largo"
+                  id="largo"
+                  placeholder="Largo"
+                  required
+                />
+              </div>
+              <div class="form-group col-12 col-md-3 col-lg-2">
+                <input
+                  class="form-control"
+                  type="number"
+                  name="peso"
+                  id="peso"
+                  placeholder="Peso"
+                  required
+                />
+              </div>
+
+              <div class="form-group  col-12 col-md-4">
+                <h6 class="h6">Precio</h6>
+                <input
+                  class="form-control"
+                  type="number"
+                  name="precio"
+                  id="precio"
+                  placeholder="Precio"
+                  required
+                />
+              </div>
+
+              <div class="form-group col-12 col-md-4 col-lg-2">
+                <h6 class="h6">Tipo mueble</h6>
+                <select
+                  class="form-control"
+                  name="tipo_mueble"
+                  id="tipo"
+                  required
+                >
+                  <option value="0">-Opciones-</option></select
+                >
+              </div>
+              <div class="form-group  col-12 col-md-4 col-lg-2">
+                <h6 class="h6">Estilo</h6>
+                <select
+                  class="form-control"
+                  name="tipo_mueble"
+                  id="estilo"
+                  required
+                >
+                  <option value="0">-Opciones-</option></select
+                >
+              </div>
+            </div>
+
+            <div class="form-group  col-12 col-md-4">
+              <h6 class="h6">Material</h6>
+              <select
+                class="form-control"
+                name="tipo_mueble"
+                id="material"
+                required
+              >
+                <option value="0">-Opciones-</option></select
+              >
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button
+            type="submit"
+            class="btn button-primary d-flex flex-row justify-content-center align-items-center"
+            id="guardar"
+          >
+            <i class="la la-save la-2x"></i>
+            Guardar
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <footer
+      class="footer d-flex justify-content-center align-items center container"
+    >
+      <p class="text-muted text-center my-2">
+        Todos los derechos reservados. FreeMarket &copy; 2020.
+      </p>
+    </footer>
+
+    <script src="../../assets/js/jquery.js"></script>
+    <script src="../../assets/js/helpers.js"></script>
+    <script src="../../assets/js/create-product.js"></script>
+  </body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      FreeMarket
+    </title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/classic/theme-triton/resources/theme-triton-all.css"
+      integrity="sha256-H6Z0700iMnPzpMwZrsx815uMC/1rfHP9hJcc8Dpn74k="
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/packages/ux/classic/triton/resources/ux-all.css"
+      integrity="sha256-CTqlASTsJkaICUFi7DbBnPiD6XEqa5vMZctTtrwoQ2o="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../../assets/css/line-awesome.min.css" />
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../assets/css/index.css" />
+  </head>
+  <body class="d-flex flex-column">
+    <header class="header d-flex justify-content-center align-items-center">
+      <div
+        class="header__container d-flex justify-content-between align-items-center container"
+      >
+        <a href="/">
+          <img
+            class="logo"
+            src="../../assets/img/logo.png"
+            alt="FreeMarket logo"
+          />
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="row justify-content-center align-items-center mt-4 mb-4">
+          <div
+            class="col-10 col-sm-10 col-md-9 col-lg-7 col-xl-6 bg-white mt-5"
+          >
+            <div id="register-form" class="p-2"></div>
+            <!-- <form method="POST" action="" class="p-2">
+              <h4 class="h4 text-center">Registro de Cliente</h4>
+              <div class="form-row">
+                <div class="form-group col-12">
+                  <h5 class="h5">Tienda Especializada</h5>
+                </div>
+                <div class="form-group col-12 col-md-6 ">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="RFC"
+                    name="RFC"
+                    placeholder="RFC (Requerido)"
+                    required
+                    pattern="^([A-ZÑ&]{3,4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$"
+                    title="No es un formato de RFC v&aacute;lido"
+                  />
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="Tienda"
+                    id="Tienda"
+                    placeholder="Nombre de tienda especializada (Requerido)"
+                    required
+                  />
+                </div>
+                <div class="form-group col-12">
+                  <h5 class="h5">Datos del Usuario</h5>
+                </div>
+                <div class="form-group col-12 col-md-4">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="Nombre_Usuario"
+                    id="Nombre_Usuario"
+                    placeholder="Nombre (Requerido) "
+                    required
+                  />
+                </div>
+                <div class="form-group col-12 col-md-4">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="Apellido1_Usuario"
+                    id="Apellido1_Usuario"
+                    placeholder="Apellido Paterno (Requerido) "
+                    required
+                  />
+                </div>
+                <div class="form-group col-12 col-md-4">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="Apellido2_Usuario"
+                    id="Apellido2_Usuario"
+                    placeholder="Apellido Materno (Requerido) "
+                    required
+                  />
+                </div>
+                <div class="form-group col-12 ">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="Direccion_Usuario"
+                    id="Direccion_Usuario"
+                    placeholder="Direccion (Requerido)"
+                    required
+                  />
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="Telefono_oficina"
+                    id="Tel_oficina"
+                    placeholder="Telefono de oficina (Requerido)"
+                    required
+                    pattern="\d{10}"
+                    title="Escriba los 10 d&iacute;gitos del número telef&oacute;nico"
+                    maxlength="10"
+                  />
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="Telefono_celular"
+                    id="Tel_celular"
+                    placeholder="Telefono celular (Opcional)"
+                    pattern="\d{10}"
+                    title="Escriba los 10 d&iacute;gitos del número telef&oacute;nico"
+                    maxlength="10"
+                  />
+                </div>
+                <div class="form-group col-12">
+                  <input
+                    class="form-control"
+                    type="email"
+                    name="Email"
+                    id="Email"
+                    placeholder="Correo Electr&oacute;nico (Requerido)"
+                    required
+                  />
+                </div>
+                <div class="form-group col-12">
+                  <input
+                    class="form-control"
+                    type="text"
+                    name="Usuario"
+                    id="Usuario"
+                    placeholder="Nombre de Usuario (Requerido)"
+                    required
+                  />
+                </div>
+                <div class="form-group col-12">
+                  <input
+                    class="form-control"
+                    type="password"
+                    name="Contraseña"
+                    id="Contraseña"
+                    placeholder="Contrase&ntilde;a (Requerido)"
+                    required
+                  />
+                </div>
+                <div class="form-group col-12 text-center">
+                  <input
+                    class="btn btn-primary col-6"
+                    type="submit"
+                    value="Registrarse"
+                    style="background-color: #084d68;"
+                  />
+                </div>
+              </div>
+            </form> -->
+            <p class="text-center">
+              ¿Ya tienes una cuenta? <a href="login.html">Ingresa</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer
+      class="footer d-flex justify-content-center align-items center container"
+    >
+      <p class="text-muted text-center my-2">
+        FreeMarket &copy; 2020.
+      </p>
+    </footer>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/ext-all.js"
+      integrity="sha256-Ny6vepWYKuhJFRgeH+NqxcclK3o3TlYnbrUj44LSQPI="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/packages/ux/classic/ux.js"
+      integrity="sha256-4k+Xy4deK+lu3gyEgD6J/Hy3JaIdnrPn+OHL73KyDiA="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/extjs/6.2.0/classic/theme-triton/theme-triton.js"
+      integrity="sha256-Ovj6szqUvpCw4YQ9TdLXm9TKxxtQ8KuGSMDdvg4SEUs="
+      crossorigin="anonymous"
+    ></script>
+    <script src="../../assets/js/register.js"></script>
+  </body>
+</html>
