@@ -10,7 +10,7 @@
 
   const logout = () => {
     localStorage.clear();
-    location.href = "/";
+    location.href = "/home.html";
   };
 
   const authenticate = () => {

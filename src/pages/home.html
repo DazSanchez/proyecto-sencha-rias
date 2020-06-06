@@ -27,7 +27,7 @@
       <div
         class="header__container d-flex justify-content-between align-items-center container"
       >
-        <a href="/">
+        <a href="/home.html">
           <img
             class="logo"
             src="../assets/img/logo.png"
@@ -49,7 +49,7 @@
             <a class="text-white mr-3" href="auth/register.html">
               Crear cuenta
             </a>
-            <a class="text-white mr-3" href="auth/login.html">Ingresar</a>
+            <a class="text-white mr-3" href="/auth/login.html">Ingresar</a>
           </div>
         </nav>
       </div>
@@ -84,44 +84,12 @@
             </button>
           </div>
         </header>
-          <form id="filter-form" class="container mt-2 filter-form">
-            <div class="row">
-              <div class="form-group col-sm">
-                <select class="form-control" id="kind-filter">
-                  <option value="1">Tipo</option>
-                  <option value="2">Estilo</option>
-                </select>
-              </div>
-    
-              <div class="form-group col-sm d-none">
-                <select class="form-control" id="style-filter">
-                  <option value="1">Reproducciones</option>
-                  <option value="2">Contempor&aacute;neos</option>
-                  <option value="3">Coloniales</option>
-                  <option value="4">Art Noveu</option>
-                </select>
-              </div>
-    
-              <div class="form-group col-sm">
-                <select class="form-control" id="type-filter">
-                  <option value="1">Sillones</option>
-                  <option value="2">Mesas</option>
-                  <option value="3">Sillas</option>
-                  <option value="4">Taburetes</option>
-                  <option value="5">Escritorios</option>
-                </select>
-              </div>
-            </div>
-          </form>
+          <div id="filter-form" class="container mt-2 filter-form cont">
+         
+          </div>
       </section>
 
       <section class="d-flex flex-column container">
-        <h4>Cat&aacute;logo de productos</h4>
-        <div id="loader" class="d-none">
-          <div class="loader">
-            Cargando...
-          </div>
-        </div>
         <div id="catalog-results" class="row"></div>
         </div>
       </section>
