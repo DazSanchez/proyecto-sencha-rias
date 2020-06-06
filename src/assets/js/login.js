@@ -1,50 +1,52 @@
-Ext.require(['Ext.plugin.Viewport']);
+Ext.require(["Ext.plugin.Viewport"]);
 
 Ext.onReady(function () {
-  Ext.create('Ext.form.Panel', {
-    renderTo: Ext.get('login-form'),
-    title: 'Ingreso',
+  Ext.create("Ext.form.Panel", {
+    renderTo: Ext.get("login-form"),
+    title: "Ingreso",
     bodyPadding: 10,
-    width: '100%',
+    width: "100%",
     standardSubmit: false,
-    url: '/api/controladores/iniciar_sesion.php',
+    url: "/api/controladores/iniciar_sesion.php",
     jsonSubmit: true,
-    defaultType: 'textfield',
+    defaultType: "textfield",
     defaults: {
       allowBlank: false,
-      blankText: '*Campo requerido',
+      blankText: "*Campo requerido",
     },
     items: [
       {
-        fieldLabel: 'Usuario',
-        name: 'username',
+        fieldLabel: "Usuario",
+        name: "username",
       },
       {
-        fieldLabel: 'Contrase\u00F1a',
-        inputType: 'password',
-        name: 'pwd',
+        fieldLabel: "Contrase\u00F1a",
+        inputType: "password",
+        name: "pwd",
       },
     ],
     buttons: [
       {
-        text: 'Ingresar',
+        text: "Ingresar",
         handler: function () {
-          const form = this.up('form').getForm();
+          const form = this.up("form").getForm();
           if (!form.isValid()) return;
 
           form.submit({
             success: function (_form, { result: { data } }) {
-              localStorage.setItem('user', JSON.stringify(data));
-              location.href = '/';
+              console.log("ggg");
+
+              localStorage.setItem("user", JSON.stringify(data));
+              location.href = "/pages";
             },
             failure: function (_form, action) {
               switch (action.failureType) {
                 case Ext.form.action.Action.CONNECT_FAILURE:
                   const response = JSON.parse(action.response.responseText);
-                  Ext.Msg.alert('Error en la petici\u00F3n', response.mensaje);
+                  Ext.Msg.alert("Error en la petici\u00F3n", response.mensaje);
                   break;
                 default:
-                  Ext.Msg.alert('Error', 'Ha ocurrido un error');
+                  Ext.Msg.alert("Error", "Ha ocurrido un error");
                   break;
               }
             },

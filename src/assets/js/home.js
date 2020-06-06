@@ -2,164 +2,304 @@
  * @author hsanchez
  */
 
-Ext.require(['Ext.plugin.Viewport']);
+Ext.require(["Ext.plugin.Viewport"]);
+Ext.namespace("Ext.datos");
 
-Ext.onReady(function () {
-  Ext.define('App.model.Product', {
-    extend: 'Ext.data.Model',
-    fields: [
-      { name: 'title', type: 'string' },
-      { name: 'price', type: 'number' },
-      { name: 'url', type: 'string' },
-    ],
-  });
-
-  Ext.define('App.store.Product', {
-    extend: 'Ext.data.Store',
-    storeId: 'productStore',
-    model: 'App.model.Product',
-    data: [{ title: 'Lorem', price: 10, url: 'url.com' }],
-  });
-
-  Ext.create('Ext.dataview.List', {
-    renderTo: Ext.get('catalog-results'),
-    itemTpl: '{title}',
-    data: [
-      { title: 'Item 1' },
-      { title: 'Item 2' },
-      { title: 'Item 3' },
-      { title: 'Item 4' },
-    ],
-  });
+var arrDatos = Ext.create("Ext.data.Store", {
+  fields: ['cve', 'name'],
+  data: [
+    { cve: 1, name: "Tipo" },
+    { cve: 2, name: "Estilo" },
+  ]
 });
 
-// const { authenticate } = window.Helpers;
+var arrDatosType=Ext.create("Ext.data.Store", {
+  fields: ['cve', 'name'],
+  data: [
+    { cve: 1, name: "Sillones" },
+    { cve: 2, name: "Mesas" },
+    { cve: 3, name: "Sillas" },
+    { cve: 4, name: "Taburetes" },
+    { cve: 5, name: "Escritorios" },
+  ]
+});
 
-// const FILTER_KIND = {
-//   TYPE: 1,
-//   STYLE: 2,
-// };
+Ext.define("Producto", {
+  extend: "Ext.data.Model",
+  fields: [{ name: "title" }, { name: "price" }, { name: "url" }],
+});
 
-// const createItem = ({ url, title, price }) => {
-//   return `
-//     <div class="col-xs col-sm-6 col-lg-3 mb-3">
-//         <div class="card">
-//             <img class="card-img-top" src="${url}" alt="${title}">
-//             <div class="card-body">
-//             <h5 class="card-title">${title}</h5>
-//             <p class="card-text">$${Number(price).toFixed(2)}</p>
-//             <button class="btn button-primary btn-block">
-//                 <i class="la la-cart-plus"></i>
-//                 Agregar al carrito
-//             </button>
-//             </div>
-//         </div>
-//     </div>`;
-// };
+var storeProduct = Ext.create("Ext.data.Store", {
+  name:'storeProduct',
+  extend: "Ext.data.Store",
+  storeId: "ProductStore",
+  model: "Producto",
+  autoLoad: true, //se carga al definirse
+  autoSync: false, //se usa cuando tiene elementos asociados de otros modelos.
+  proxy: {
+    type: "ajax",
+    pageParam: false, //to remove param "page"
+    startParam: false, //to remove param "start"
+    limitParam: false, //to remove param "limit"
+    noCache: false, // to remove _dc
+    url: "/api/controladores/catalogo_productos.php?filter=1&q=1",
+    reader: {
+      type: "json",
+      rootProperty: "data", //elemento del json que corresponde a un arreglo
+    },
+  },
+});
 
-// const toggleLoading = () => {
-//   const $loader = $('#loader');
-//   const $catalog = $('#catalog-results');
+Ext.onReady(function () {
 
-//   $loader.toggleClass('d-none');
-//   $catalog.toggleClass('d-none');
+  //Define tabla
+  const table = Ext.create("Ext.form.Panel", {
+    title: "Catalogo de productos",
+    renderTo: Ext.get("catalog-results"),
+    bodyPadding: 5,
+    width: "100vw",
+    items: [
+      {
+        xtype: "grid",
+        store: storeProduct,
+        width: "100%",
+        columns: [
+          {
+            text: "Titulo",
+            width: 250,
+            dataIndex: "title",
+          },
+          {
+            text: "Precio",
+            width: 100,
+            dataIndex: "price",
+          },
+          {
+            text: "Producto",
+            dataIndex: "url",
+            renderer: function (value, metadata, record) {
+              return (
+                '<img src= "' +
+                value +
+                '" style="width:150px;height:150px" >' +
+                "<br> <br>" +
+                '<button class="btn button-primary btn-block">' +
+                '<i class="la la-cart-plus"></i>' +
+                "Agregar al carrito" +
+                "</button>"
+              );
+            },
+            width: 250,
+          },
+        ],
+      },
+    ],
+  });
 
-//   return () => {
-//     $loader.toggleClass('d-none');
-//     $catalog.toggleClass('d-none');
-//   };
-// };
+  Ext.create("Ext.form.Panel", {
+    renderTo: Ext.get("filter-form"),
+    bodyPadding: 10,
+    width: "80%",
+    class:"content-filters",
+    defaultType: "textfield",
+    method:'GET',
+    defaults: {
+      allowBlank: false,
+    },
+    items: [
+      {
+        xtype: "combobox",
+        displayField: "name",
+        valueField: "cve",
+        name: "filter",
+        id:"typecbx",
+        store: arrDatos,
+        editable:false,
+        listeners: {
+          change: function (field, newValue, oldValue) {
+            if(newValue ==1){
+              var combo2 = Ext.getCmp('typecbxs');
+              combo2.select(combo2.getStore().getAt(0));              
+            }else{
+              arrDatosType = Ext.create("Ext.data.Store", {
+                fields: ['cve', 'name'],
+                data: [
+                  { cve: 1, name: "Reproducciones" },
+                  { cve: 2, name: "Contemporaneos" },
+                  { cve: 3, name: "Coloniales" },
+                  { cve: 4, name: "Art Noveu" },
+                ]
+              });
+              var combo2 = Ext.getCmp('typecbxs');
+              combo2.setStore(arrDatosType);
+              combo2.select(combo2.getStore().getAt(0));
+              combo2.setStore(arrDatosType);             
+            }
+          },
+          scope: this
+      }
+      },
+      {
+        xtype: "combobox",
+        displayField: "name",
+        valueField: "cve",
+        name: "q",
+        id:"typecbxs",
+        store: arrDatosType,
+      },
+    ],
+    buttons: [
+      {
+        text: "Filtrar",
+        
+        handler: function () {          
+          const form = this.up("form").getForm();
+          if (!form.isValid()) return;
+          const url = "/api/controladores/catalogo_productos.php";
+          const params = "?filter="+form.getValues().filter+"&q="+form.getValues().q;
+          
+          form.submit({
+            pageParam: false, //to remove param "page"
+            startParam: false, //to remove param "start"
+            limitParam: false, //to remove param "limit"
+            noCache: false, // to remove _dc
+            url: url+params,          
+          });
 
-// const renderResults = items => {
-//   $('#catalog-results').html(
-//     items ||
-//       $(
-//         '<h3 class="text-muted my-5 text-center">No hay resultados para esta b&uacute;squeda</h3>'
-//       ).html()
-//   );
-// };
+          var newStore = Ext.create("Ext.data.Store", {
+            extend: "Ext.data.Store",
+            storeId: "ProductStore",
+            model: "Producto",
+            autoLoad: true,
+            autoSync: false, 
+            proxy: {
+              type: "ajax",
+              pageParam: false, //to remove param "page"
+              startParam: false, //to remove param "start"
+              limitParam: false, //to remove param "limit"
+              noCache: false, // to remove _dc
+              url: url+params,
+              reader: {
+                type: "json",
+                rootProperty: "data",
+              },
+            },
+          });
+          table.down('grid').setStore(newStore)
+        },
+      },
+    ],
+  });
 
-// const getCatalog = (filters, handler) => {
-//   $.ajax('/api/controladores/catalogo_productos.php', {
-//     data: filters,
-//     dataType: 'json',
-//     success: response => {
-//       handler(response.map(createItem).join(' '));
-//     },
-//     error: () => {
-//       alert('Ha ocurrido un error haciendo la petición.');
-//     },
-//   });
-// };
+  var combo = Ext.getCmp('typecbx');
+  combo.select(combo.getStore().getAt(0));
 
-// const searchHandler = filters => {
-//   const loaded = toggleLoading();
-//   getCatalog(filters, results => {
-//     renderResults(results);
-//     loaded();
-//   });
-// };
 
-// const setupFormToggle = $form => {
-//   const $filterToggle = $('#toggle-filters');
+  var user = localStorage.getItem('user');
 
-//   $filterToggle.click(() => {
-//     $form.toggleClass('show');
-//     $filterToggle.toggleClass('button-primary');
-//   });
-// };
+  const objectUser = JSON.parse(user);
 
-// const setupFilterSelection = ({ $kind, $type, $style }) => {
-//   $kind.change(() => {
-//     $type.parent().toggleClass('d-none');
-//     $style.parent().toggleClass('d-none');
-//   });
-// };
+  console.log();
+  
 
-// const setupFilterTrigger = ({ $kind, $type, $style }) => {
-//   $type.change(() => {
-//     searchHandler({ filter: $kind.val(), q: $type.val() });
-//   });
+  if(objectUser.userRole == 'ADMIN'){
+    $(document).ready(() => {
+      $("#username-display").removeClass("d-none");
+      $("#username").text(objectUser.username);
+      $("#admin-add").removeClass("d-none");
+      $("#logout-btn").removeClass("d-none");
+      $("#access-links").toggleClass("d-none");
 
-//   $style.change(() => {
-//     searchHandler({ filter: $kind.val(), q: $style.val() });
-//   });
+    });  
+  }
+  else if(objectUser.userRole == 'CLIENTE'){
+    $(document).ready(() => {
+      $("#username-display").removeClass("d-none");
+      $("#username").text(objectUser.username);
+      $("#admin-add").toggleClass("d-none");
+      $("#logout-btn").removeClass("d-none");
+      $("#access-links").toggleClass("d-none");
+    });  
+  }
 
-//   $kind.change(() => {
-//     const kind = $kind.val();
-//     searchHandler({
-//       filter: kind,
-//       q: kind == FILTER_KIND.TYPE ? $type.val() : $style.val(),
-//     });
-//   });
-// };
+});
 
-// const setupFilterForm = () => {
-//   const $form = $('#filter-form');
-//   const $kindFilter = $('#kind-filter');
-//   const $typeFilter = $('#type-filter');
-//   const $styleFilter = $('#style-filter');
+const FILTER_KIND = {
+  TYPE: 1,
+  STYLE: 2,
+};
 
-//   const inputs = {
-//     $kind: $kindFilter,
-//     $style: $styleFilter,
-//     $type: $typeFilter,
-//   };
+const searchHandler = (filters) => {
+  // getCatalog(filters, (results) => {
+  //   renderResults(results);
+  // });
+};
 
-//   setupFormToggle($form);
-//   setupFilterSelection(inputs);
-//   setupFilterTrigger(inputs);
+const setupFormToggle = ($form) => {
+  const $filterToggle = $("#toggle-filters");
+  
 
-//   searchHandler({ filter: 1, q: 1 });
-// };
+  $filterToggle.click(() => {
+    $form.toggleClass("show");
+    $filterToggle.toggleClass("button-primary");
+  });
+};
+
+const setupFilterSelection = ({ $kind, $type, $style }) => {
+  $kind.change(() => {
+    $type.parent().toggleClass("d-none");
+    $style.parent().toggleClass("d-none");
+  });
+};
+
+const setupFilterTrigger = ({ $kind, $type, $style }) => {
+  $type.change(() => {
+    searchHandler({ filter: $kind.val(), q: $type.val() });
+  });
+
+  $style.change(() => {
+    searchHandler({ filter: $kind.val(), q: $style.val() });
+  });
+
+  $kind.change(() => {
+    const kind = $kind.val();
+    searchHandler({
+      filter: kind,
+      q: kind == FILTER_KIND.TYPE ? $type.val() : $style.val(),
+    });
+  });
+};
+
+const setupFilterForm = () => {
+  const $form = $("#filter-form");
+  const $kindFilter = $("#kind-filter");
+  const $typeFilter = $("#type-filter");
+  const $styleFilter = $("#style-filter");
+
+  const inputs = {
+    $kind: $kindFilter,
+    $style: $styleFilter,
+    $type: $typeFilter,
+  };
+
+  setupFormToggle($form);
+  setupFilterSelection(inputs);
+  setupFilterTrigger(inputs);
+
+  searchHandler({ filter: 1, q: 1 });
+};
 
 $(document).ready(() => {
-  $('#call-to-action').click(() => {
+  $("#call-to-action").click(() => {
     window.scrollTo({
-      behavior: 'smooth',
-      top: $('#catalog').offset().top,
+      behavior: "smooth",
+      top: $("#catalog").offset().top,
     });
   });
 
-  // setupFilterForm();
+
+
+  const $btn =  $("#admin-add");
+  $btn.removeClass("d-none");
+  setupFilterForm();
 });
